@@ -1,6 +1,5 @@
 Ext.onReady(() => {
-
-    Ext.define('Invoices', {
+    Ext.define(INVOICE_MODEL_NAME, {
         extend: 'Ext.data.Model',
         fields: [
             {
@@ -27,107 +26,9 @@ Ext.onReady(() => {
         ]
     })
 
-    let advSearchDialogCreator = (id, name, storeID) => {
-        let dialog = {
-            xtype: 'container',
-            items: [
-                {
-                    xtype: 'panel',
-                    layout: {
-                        type: 'fit',
-                        align: 'center',
-                        pack: 'center'
-                    },
-                    flex: 1,
-                    margin: '10 0 10 0',
-                    items: [
-                        {
-                            xtype: 'panel',
-                            layout: {
-                                type: 'hbox',
-                                align: 'center',
-                                pack: 'center'
-                            },
-                            items: [
-                                {
-                                    xtype: 'panel',
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'center',
-                                        pack: 'center'
-                                    },
-                                    height: 80,
-                                    flex: 1,
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            fieldLabel: 'Invoice Number',
-                                            name: `${name}_invoice_number`,
-                                            id: `${id}_search_invoice_number`,
-                                            margin: '10 10 10 10 ',
-
-                                        },
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'center',
-                                        pack: 'center'
-                                    },
-                                    height: 80,
-                                    flex: 1,
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            fieldLabel: 'Customer ID',
-                                            name: `${name}_customer_id`,
-                                            id: `${id}_search_customer_id`,
-                                            margin: '10 10 10 10 ',
-                                        },
-                                    ]
-                                }
-                            ]
-
-
-                        },
-                    ]
-                },
-                {
-                    xtype: 'container',
-                    layout: {
-                        type: 'hbox',
-                        align: 'center',
-                        pack: 'center'
-                    },
-                    margin: '10 0 10 0',
-                    items: [
-                        {
-                            xtype: 'button',
-                            text: 'Clear',
-                            margin: '0 10 0 10',
-                            width: 100
-                        },
-                        {
-
-                            xtype: 'button',
-                            text: 'Search',
-                            margin: '0 10 0 10',
-                            width: 100
-
-                        }
-                    ]
-                }
-            ]
-
-        }
-        return dialog;
-    }
-
     let openInvoicesStore = Ext.create('Ext.data.Store', {
-        storeId: 'openInvoiceStore',
-        model: 'Invoices',
+        storeId: OPEN_INVOICE_STORE_ID,
+        model: INVOICE_MODEL_NAME,
         pageSize: 6,
         proxy: {
             type: 'memory',
@@ -210,7 +111,158 @@ Ext.onReady(() => {
     })
 
     openInvoicesStore.load();
-    const createAdvanceSearchButton = (id, text) => {
+
+
+    const analyticsTabCreater = (title, id, name, storeID) => {
+        let analytics_adv_search_dialog_id = `${id}_adv_search_dialog`;
+        let analytics_tab = {
+            id: `${id}`,
+            title: `${title}`,
+            items: [
+                {
+                    xtype: 'panel',
+                    layout: {
+                        type: 'hbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    border: false,
+                    items: [
+                        {
+                            xtype: 'splitter',
+                            flex: 1
+
+                        },
+
+                        (createAdvanceSearchButton)(ANALYTICS_ADV_SEARCH_BUTTON_ID, ANALYTICS_ADV_SEARCH_BUTTON_NAME, analytics_adv_search_dialog_id),
+
+                    ]
+                },
+                (advSearchDialogCreator)(analytics_adv_search_dialog_id, `${name}_adv_search_dialog`, `${storeID}_adv_search_dialog`)
+            ]
+        }
+        return analytics_tab;
+    }
+
+    const advSearchDialogCreator = (id, name, storeID) => {
+        let dialog = {
+            id: `${id}`,
+            name: `${name}`,
+            hidden: true,
+            xtype: 'container',
+            layout: {
+                type: 'auto',
+                pack: 'center'
+            },
+            style: { backgroundColor: '#ececec' },
+            items: [
+                {
+                    xtype: 'panel',
+                    layout: {
+                        type: 'fit',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    flex: 1,
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center',
+                                pack: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center',
+                                        pack: 'center'
+                                    },
+                                    height: 80,
+                                    flex: 1,
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'Invoice Number',
+                                            name: `${name}_invoice_number`,
+                                            id: `${id}_search_invoice_number_textfield`,
+                                            margin: '10 10 10 10 ',
+
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center',
+                                        pack: 'center'
+                                    },
+                                    height: 80,
+                                    flex: 1,
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'Customer ID',
+                                            name: `${name}_customer_id`,
+                                            id: `${id}_search_customer_id_textfield`,
+                                            margin: '10 10 10 10 ',
+                                        },
+                                    ]
+                                }
+                            ]
+
+
+                        },
+                    ]
+                },
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    margin: '10 0 10 0',
+                    items: [
+                        {
+                            xtype: 'button',
+                            id: `${id}_clear_button`,
+                            text: 'Clear',
+                            margin: '0 10 0 10',
+                            width: 100,
+                            listeners: {
+                                click: (e) => {
+                                    console.log(e.id);
+                                }
+                            }
+
+                        },
+                        {
+
+                            xtype: 'button',
+                            id: `${id}_search_button`,
+                            text: 'Search',
+                            margin: '0 10 0 10',
+                            width: 100,
+                            listeners: {
+                                click: (e) => {
+                                    console.log(e.id);
+                                }
+                            }
+
+                        }
+                    ]
+                }
+            ]
+
+        }
+        return dialog;
+    }
+
+    const createAdvanceSearchButton = (id, text, corresponding_dialog_id) => {
         let advSearchButtonComponent = Ext.create('Ext.button.Button', {
             id: `${id}`,
             border: false,
@@ -222,29 +274,37 @@ Ext.onReady(() => {
             margin: 10,
             listeners: {
                 click: (e) => {
-                    e.iconCls === 'x-fa fa-caret-down' ? e.setIconCls('x-fa fa-caret-up') : e.setIconCls('x-fa fa-caret-down')
+                    console.log("adv_search_button with id : ", e.id);
+                    if (e.iconCls === 'x-fa fa-caret-down') {
+                        Ext.getCmp(corresponding_dialog_id).show();
+                        e.setIconCls('x-fa fa-caret-up')
+                    } else {
+                        Ext.getCmp(corresponding_dialog_id).hide();
+                        e.setIconCls('x-fa fa-caret-down')
+
+                    }
                 }
             }
         })
         return advSearchButtonComponent;
     }
 
-
     const panelTabCreater = (title, id, name, storeID) => {
         let button_id = '';
         let button_name = '';
-        if (id === 'all_invoices_grid') {
-            button_id = 'all_invoice_adv_search_button';
-            button_name = 'Advance Search';
-        } else if (id === 'open_invoices_grid') {
-            button_id = 'open_invoice_adv_search_button';
-            button_name = 'Advance Search for Open Invoice';
-        } else if (id === 'close_invoices_grid') {
-            button_id = 'close_invoice_adv_search_button';
-            button_name = 'Advance Search for Close Invoice';
+        let adv_search_dialog_id = `${id}_adv_search_dialog`;
+        if (id === ALL_INVOICES_TAB_ID) {
+            button_id = ALL_INVOICES_ADV_SEARCH_BUTTON_ID;
+            button_name = ALL_INVOICES_ADV_SEARCH_BUTTON_NAME;
+        } else if (id === OPEN_INVOICES_TAB_ID) {
+            button_id = OPEN_INVOICES_ADV_SEARCH_BUTTON_ID;
+            button_name = OPEN_INVOICES_ADV_SEARCH_BUTTON_NAME;
+        } else if (id === CLOSE_INVOICES_TAB_ID) {
+            button_id = CLOSE_INVOICES_ADV_SEARCH_BUTTON_ID;
+            button_name = CLOSE_INVOICES_ADV_SEARCH_BUTTON_NAME;
         } else {
-            button_id = 'deleted_invoice_adv_search_button';
-            button_name = 'Advance Search for Deleted Invoice';
+            button_id = DELETED_INVOICES_ADV_SEARCH_BUTTON_ID;
+            button_name = DELETED_INVOICES_ADV_SEARCH_BUTTON_NAME;
         }
         let createdTab = {
             title: `${title}`,
@@ -264,11 +324,11 @@ Ext.onReady(() => {
 
                         },
 
-                        (createAdvanceSearchButton)(button_id, button_name),
+                        (createAdvanceSearchButton)(button_id, button_name, adv_search_dialog_id),
 
                     ]
                 },
-                (advSearchDialogCreator)(id, name, storeID),
+                (advSearchDialogCreator)(adv_search_dialog_id, `${name}_adv_search_dialog`, `${storeID}_adv_search_dialog`,),
                 {
                     // Open Invoice Grid
                     title: `${title}`,
@@ -346,8 +406,8 @@ Ext.onReady(() => {
                             iconCls: 'x-fa fa-plus-circle',
                             disabled: false,
                             listeners: {
-                                click: () => {
-                                    console.log('add button clicked in : ' + name);
+                                click: (e) => {
+                                    console.log('add button clicked with id : ' + e.id);
                                 }
                             }
                         }, {
@@ -357,8 +417,8 @@ Ext.onReady(() => {
                             iconCls: 'x-fa fa-pencil-square-o',
                             disabled: true,
                             listeners: {
-                                click: () => {
-                                    console.log('edit button clicked in : ' + name);
+                                click: (e) => {
+                                    console.log('edit button clicked with id : ' + e.id);
                                 }
                             }
                         }, {
@@ -368,8 +428,8 @@ Ext.onReady(() => {
                             id: `deleteButton_${name}`,
                             iconCls: 'x-fa fa-trash',
                             listeners: {
-                                click: () => {
-                                    console.log('delete button clicked in: ' + name);
+                                click: (e) => {
+                                    console.log('delete button clicked with id : ' + e.id);
                                 }
                             }
                         },
@@ -379,8 +439,8 @@ Ext.onReady(() => {
                             disabled: true,
                             id: `approveButton_${name}`,
                             listeners: {
-                                click: () => {
-                                    console.log('approved button clicked in : ' + name);
+                                click: (e) => {
+                                    console.log('approved button clicked with id : ' + e.id);
                                 }
                             }
                         }]
@@ -392,9 +452,9 @@ Ext.onReady(() => {
 
     }
 
-    let parentContainer = Ext.create('Ext.container.Container', {
+    const parentContainer = Ext.create('Ext.container.Container', {
         style: { borderStyle: 'solid', borderWidth: '40px', borderColor: 'lightgrey' },
-        id: 'parentContainer',
+        id: PARENT_CONTAINER_ID,
         border: true,
         layout: {
             type: 'fit',
@@ -403,6 +463,7 @@ Ext.onReady(() => {
         },
         items: [
             {
+                id: IMAGE_HEADER_PANEL_ID,
                 xtype: 'panel',
                 layout: {
                     type: 'hbox',
@@ -466,6 +527,7 @@ Ext.onReady(() => {
                 ]
             },
             {
+                id: TITLE_HEADER_PANEL_ID,
                 xtype: 'panel',
                 layout: {
                     type: 'hbox',
@@ -478,7 +540,7 @@ Ext.onReady(() => {
                 items: [
                     {
                         xtype: 'label',
-                        text: 'Invoice Management',
+                        text: HEADER_PANEL_TEXT,
                         style: { fontSize: '20px', fontWeight: 'normal', color: 'white' },
                         flex: 1,
                     },
@@ -488,41 +550,18 @@ Ext.onReady(() => {
                 xtype: 'tabpanel',
                 border: false,
                 activeTab: 1,
+                id: TAB_PANEL_ID,
                 layout: {
                     type: 'fit',
                     align: 'center',
                     pack: 'center'
                 },
                 items: [
-                    (panelTabCreater)('All Invoices', 'all_invoices_grid', 'all_invoices', 'openInvoiceStore'),
-                    (panelTabCreater)('Open Invoices', 'open_invoices_grid', 'open_invoices', 'openInvoiceStore'),
-                    (panelTabCreater)('Close Invoices', 'close_invoices_grid', 'close_invoices', 'openInvoiceStore'),
-                    (panelTabCreater)('Deleted Invoices', 'deleted_invoices_grid', 'deleted_invoices', 'openInvoiceStore'),
-                    {
-                        title: `Analytics`,
-                        items: [
-                            {
-                                xtype: 'panel',
-                                layout: {
-                                    type: 'hbox',
-                                    align: 'center',
-                                    pack: 'center'
-                                },
-                                border: false,
-                                items: [
-                                    {
-                                        xtype: 'splitter',
-                                        flex: 1
-
-                                    },
-
-                                    (createAdvanceSearchButton)('analytics_adv_search_button', 'Analytics Advance Search'),
-
-                                ]
-                            },
-                            (advSearchDialogCreator)('analytics', 'analytics_tab', 'openInvoiceStore')
-                        ]
-                    }
+                    (panelTabCreater)(ALL_INVOICES_TAB_TITLE, ALL_INVOICES_TAB_ID, ALL_INVOICES_TAB_NAME, ALL_INVOICES_STORE),
+                    (panelTabCreater)(OPEN_INVOICES_TAB_TITLE, OPEN_INVOICES_TAB_ID, OPEN_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
+                    (panelTabCreater)(CLOSE_INVOICES_TAB_TITLE, CLOSE_INVOICES_TAB_ID, CLOSE_INVOICES_TAB_NAME, CLOSE_INVOICES_STORE),
+                    (panelTabCreater)(DELETED_INVOICES_TAB_TITLE, DELETED_INVOICES_TAB_ID, DELETED_INVOICES_TAB_NAME, DELETED_INVOICES_STORE),
+                    (analyticsTabCreater)(ANALYTICS_TAB_TITLE, ANALYTICS_TAB_ID, ANALYTICS_TAB_NAME, ANALYTICS_TAB_STORE)
                 ]
             },
             {
@@ -537,14 +576,17 @@ Ext.onReady(() => {
                 items: [
                     {
                         xtype: 'label',
-                        text: 'Copyright 2023 Highradius. All Rights Reserved',
+                        text: FOOTER_COPYRIGHT_TEXT,
 
                     }
                 ]
             }
         ]
     },);
+
+
     Ext.create('Ext.container.Viewport', {
+        id: MAIN_VIEWPORT_ID,
         layout: {
             type: 'anchor',
             pack: 'center',
