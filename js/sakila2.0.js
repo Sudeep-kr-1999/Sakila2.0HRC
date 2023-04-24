@@ -1,4 +1,7 @@
 Ext.onReady(() => {
+
+    let selectedRows = [];
+
     Ext.define(INVOICE_MODEL_NAME, {
         extend: 'Ext.data.Model',
         fields: [
@@ -26,6 +29,45 @@ Ext.onReady(() => {
         ]
     })
 
+    const editButtonDisplayHandler = (edit_button_id, selectedRowsList) => {
+        console.log(selectedRowsList);
+        let editable_invoices = selectedRowsList.filter(({ is_open }) => is_open === 1);
+        if (selectedRowsList.length === 1 && selectedRowsList.length === editable_invoices.length) {
+            Ext.getCmp(edit_button_id).enable();
+        } else {
+            Ext.getCmp(edit_button_id).disable();
+        }
+    }
+
+    const addButtonDisplayHandler = (add_button_id, selectedRowsList) => {
+        console.log(selectedRowsList);
+        if (selectedRowsList.length > 0) {
+            console.log('add button disable')
+            Ext.getCmp(add_button_id).disable();
+        } else {
+            Ext.getCmp(add_button_id).enable();
+        }
+    }
+    const deleteButtonDisplayHandler = (delete_button_id, selectedRowsList) => {
+        console.log(selectedRowsList);
+        let deletable_invoices = selectedRowsList.filter(({ is_open }) => is_open === 0);
+        if (selectedRowsList.length > 0 && selectedRowsList.length === deletable_invoices.length) {
+            Ext.getCmp(delete_button_id).enable();
+        } else {
+            Ext.getCmp(delete_button_id).disable();
+        }
+    }
+    const approveButtonDisplayHandler = (approve_button_id, selectedRowsList) => {
+        console.log(selectedRowsList);
+        let approvable_invoices = selectedRowsList.filter(({ is_open }) => is_open === 1);
+        if (selectedRowsList.length > 0 && selectedRowsList.length === approvable_invoices.length) {
+            Ext.getCmp(approve_button_id).enable();
+        } else {
+            Ext.getCmp(approve_button_id).disable();
+        }
+    }
+
+
     let openInvoicesStore = Ext.create('Ext.data.Store', {
         storeId: OPEN_INVOICE_STORE_ID,
         model: INVOICE_MODEL_NAME,
@@ -44,7 +86,7 @@ Ext.onReady(() => {
                     'unit_price': 7,
                     'customer_id': '7',
                     'country': 'India',
-                    'is_open': 0
+                    'is_open': 1
                 },
                 {
                     'sl_no': 25899,
@@ -56,7 +98,7 @@ Ext.onReady(() => {
                     'unit_price': 1.45,
                     'customer_id': '15533',
                     'country': 'United Kingdom',
-                    'is_open': 0
+                    'is_open': 1
                 },
                 {
                     'sl_no': 25898,
@@ -68,7 +110,7 @@ Ext.onReady(() => {
                     'unit_price': 18,
                     'customer_id': '12778',
                     'country': 'Netherlands',
-                    'is_open': 0
+                    'is_open': 1
                 },
                 {
                     'sl_no': 25897,
@@ -290,6 +332,7 @@ Ext.onReady(() => {
     }
 
     const panelTabCreater = (title, id, name, storeID) => {
+        let selectedRows = [];
         let button_id = '';
         let button_name = '';
         let adv_search_dialog_id = `${id}_adv_search_dialog`;
@@ -330,7 +373,7 @@ Ext.onReady(() => {
                 },
                 (advSearchDialogCreator)(adv_search_dialog_id, `${name}_adv_search_dialog`, `${storeID}_adv_search_dialog`,),
                 {
-                    // Open Invoice Grid
+
                     title: `${title}`,
                     id: `${id}`,
                     name: `${name}`,
@@ -399,52 +442,144 @@ Ext.onReady(() => {
                         displayInfo: true,
                         displayMsg: 'Displaying {0} - {1} of {2} &nbsp;',
                         emptyMsg: "No Records to Display!&nbsp;",
-                        items: [{
-                            xtype: 'button',
-                            text: 'Add',
-                            id: `addButton_${name}`,
-                            iconCls: 'x-fa fa-plus-circle',
-                            disabled: false,
-                            listeners: {
-                                click: (e) => {
-                                    console.log('add button clicked with id : ' + e.id);
-                                }
+                        items: (() => {
+                            if (id === ALL_INVOICES_TAB_ID) {
+                                return [{
+                                    xtype: 'button',
+                                    text: 'Add',
+                                    id: `addButton_${name}`,
+                                    iconCls: 'x-fa fa-plus-circle',
+                                    disabled: false,
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('add button clicked with id : ' + e.id);
+
+                                        }
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    text: 'Edit',
+                                    id: `editButton_${name}`,
+                                    iconCls: 'x-fa fa-pencil-square-o',
+                                    disabled: true,
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('edit button clicked with id : ' + e.id);
+                                        }
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    text: 'Delete',
+                                    disabled: true,
+                                    id: `deleteButton_${name}`,
+                                    iconCls: 'x-fa fa-trash',
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('delete button clicked with id : ' + e.id);
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'Approve',
+                                    disabled: true,
+                                    id: `approveButton_${name}`,
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('approved button clicked with id : ' + e.id);
+                                        }
+                                    }
+                                }]
+                            } else if (id === OPEN_INVOICES_TAB_ID) {
+                                return [{
+                                    xtype: 'button',
+                                    text: 'Add',
+                                    id: `addButton_${name}`,
+                                    iconCls: 'x-fa fa-plus-circle',
+                                    disabled: false,
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('add button clicked with id : ' + e.id);
+
+                                        }
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    text: 'Edit',
+                                    id: `editButton_${name}`,
+                                    iconCls: 'x-fa fa-pencil-square-o',
+                                    disabled: true,
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('edit button clicked with id : ' + e.id);
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'Approve',
+                                    disabled: true,
+                                    id: `approveButton_${name}`,
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('approved button clicked with id : ' + e.id);
+                                        }
+                                    }
+                                }]
+                            } else if (id === CLOSE_INVOICES_TAB_ID) {
+                                return [{
+                                    xtype: 'button',
+                                    text: 'Delete',
+                                    disabled: true,
+                                    id: `deleteButton_${name}`,
+                                    iconCls: 'x-fa fa-trash',
+                                    listeners: {
+                                        click: (e) => {
+                                            console.log('delete button clicked with id : ' + e.id);
+                                        }
+                                    }
+                                },
+                                ]
                             }
-                        }, {
-                            xtype: 'button',
-                            text: 'Edit',
-                            id: `editButton_${name}`,
-                            iconCls: 'x-fa fa-pencil-square-o',
-                            disabled: true,
-                            listeners: {
-                                click: (e) => {
-                                    console.log('edit button clicked with id : ' + e.id);
-                                }
+                        })(id),
+
+                    }],
+                    listeners: {
+                        select: (e, selModel, index) => {
+                            selectedRows.push(selModel.data);
+                            if (id === ALL_INVOICES_TAB_ID) {
+                                addButtonDisplayHandler(`addButton_${name}`, selectedRows);
+                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
+                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                            } else if (id === OPEN_INVOICES_TAB_ID) {
+                                addButtonDisplayHandler(`addButton_${name}`, selectedRows);
+                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                            } else if (id === CLOSE_INVOICES_TAB_ID) {
+                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
                             }
-                        }, {
-                            xtype: 'button',
-                            text: 'Delete',
-                            disabled: true,
-                            id: `deleteButton_${name}`,
-                            iconCls: 'x-fa fa-trash',
-                            listeners: {
-                                click: (e) => {
-                                    console.log('delete button clicked with id : ' + e.id);
-                                }
-                            }
+
                         },
-                        {
-                            xtype: 'button',
-                            text: 'Approve',
-                            disabled: true,
-                            id: `approveButton_${name}`,
-                            listeners: {
-                                click: (e) => {
-                                    console.log('approved button clicked with id : ' + e.id);
-                                }
+                        deselect: (e, selModel, index) => {
+                            console.log(id);
+                            selectedRows = selectedRows.filter(({ sl_no }) =>
+                                (sl_no !== selModel.data.sl_no)
+                            );
+                            if (id === ALL_INVOICES_TAB_ID) {
+                                addButtonDisplayHandler(`addButton_${name}`, selectedRows);
+                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
+                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                            } else if (id === OPEN_INVOICES_TAB_ID) {
+                                addButtonDisplayHandler(`addButton_${name}`, selectedRows);
+                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                            } else if (id === CLOSE_INVOICES_TAB_ID) {
+                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
                             }
-                        }]
-                    }]
+                        }
+                    }
                 }
             ]
         }
@@ -557,10 +692,10 @@ Ext.onReady(() => {
                     pack: 'center'
                 },
                 items: [
-                    (panelTabCreater)(ALL_INVOICES_TAB_TITLE, ALL_INVOICES_TAB_ID, ALL_INVOICES_TAB_NAME, ALL_INVOICES_STORE),
+                    (panelTabCreater)(ALL_INVOICES_TAB_TITLE, ALL_INVOICES_TAB_ID, ALL_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
                     (panelTabCreater)(OPEN_INVOICES_TAB_TITLE, OPEN_INVOICES_TAB_ID, OPEN_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
-                    (panelTabCreater)(CLOSE_INVOICES_TAB_TITLE, CLOSE_INVOICES_TAB_ID, CLOSE_INVOICES_TAB_NAME, CLOSE_INVOICES_STORE),
-                    (panelTabCreater)(DELETED_INVOICES_TAB_TITLE, DELETED_INVOICES_TAB_ID, DELETED_INVOICES_TAB_NAME, DELETED_INVOICES_STORE),
+                    (panelTabCreater)(CLOSE_INVOICES_TAB_TITLE, CLOSE_INVOICES_TAB_ID, CLOSE_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
+                    (panelTabCreater)(DELETED_INVOICES_TAB_TITLE, DELETED_INVOICES_TAB_ID, DELETED_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
                     (analyticsTabCreater)(ANALYTICS_TAB_TITLE, ANALYTICS_TAB_ID, ANALYTICS_TAB_NAME, ANALYTICS_TAB_STORE)
                 ]
             },
