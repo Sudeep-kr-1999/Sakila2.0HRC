@@ -1,7 +1,4 @@
 Ext.onReady(() => {
-
-    let selectedRows = [];
-
     let addWindowModal = Ext.create('Ext.window.Window', {
         id: ADD_INVOICE_WINDOW_ID,
         modal: true,
@@ -27,7 +24,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Sl No',
                 name: 'sl_no',
-                id: 'add_sl_number',
+                id: ADD_SL_NO_TEXTFIELD_ID,
                 emptyText: 'Sl No',
                 anchor: '100%',
                 value: 123,
@@ -36,7 +33,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Invoice Number',
                 name: 'invoice_number',
-                id: 'invoice_number',
+                id: ADD_INVOICE_NUMBER_TEXTFIELD_ID,
                 emptyText: 'Invoice Number',
                 anchor: '100%',
                 allowBlank: false
@@ -44,7 +41,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Stock Code',
                 name: 'stock_code',
-                id: 'stock_code',
+                id: ADD_STOCK_CODE_TEXTFIELD_ID,
                 emptyText: 'Stock Code',
                 anchor: '100%',
                 allowBlank: false
@@ -52,7 +49,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Quantity',
                 name: 'quantity',
-                id: 'quantity',
+                id: ADD_QUANTITY_TEXTFIELD_ID,
                 emptyText: 'Quantity',
                 anchor: '100%',
                 allowBlank: false
@@ -60,7 +57,7 @@ Ext.onReady(() => {
                 xtype: 'datefield',
                 fieldLabel: 'Invoice Date',
                 name: 'invoice_date',
-                id: 'invoice_date',
+                id: ADD_INVOICE_DATE_TEXTFIELD_ID,
                 emptyText: 'Invoice Date',
                 anchor: '100%',
                 allowBlank: false
@@ -68,7 +65,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Unit Price',
                 name: 'unit_price',
-                id: 'unit_price',
+                id: ADD_UNIT_PRICE_TEXTFIELD_ID,
                 emptyText: 'Unit Price',
                 anchor: '100%',
                 allowBlank: false
@@ -76,7 +73,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Customer ID',
                 name: 'customer_id',
-                id: 'customer_id',
+                id: ADD_CUSTOMER_ID_TEXTFIELD_ID,
                 emptyText: 'Customer ID',
                 anchor: '100%',
                 allowBlank: false
@@ -84,7 +81,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Country',
                 name: 'country',
-                id: 'country',
+                id: ADD_COUNTRY_TEXTFIELD_ID,
                 emptyText: 'Country',
                 anchor: '100%',
                 allowBlank: false
@@ -92,7 +89,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'Description',
                 name: 'description',
-                id: 'description',
+                id: ADD_DESCRIPTION_TEXTFIELD_ID,
                 emptyText: 'Description',
                 anchor: '100%',
                 allowBlank: false
@@ -100,7 +97,7 @@ Ext.onReady(() => {
                 xtype: 'textfield',
                 fieldLabel: 'isOpen',
                 name: 'is_open',
-                id: 'is_open',
+                id: ADD_IS_OPEN_TEXTFIELD_ID,
                 emptyText: 'isOpen',
                 anchor: '100%',
                 value: 0,
@@ -136,6 +133,83 @@ Ext.onReady(() => {
         }
     });
 
+
+    let editWindowModal = Ext.create('Ext.window.Window', {
+        title: 'Edit',
+        id: EDIT_INVOICE_WINDOW_ID,
+        width: 500,
+        modal: true,
+        layout: {
+            type: 'fit'
+        },
+        autoDestroy: false,
+        closeAction: 'close',
+        items: [{
+            xtype: 'form',
+            border: false,
+            layout: {
+                type: 'anchor',
+                pack: 'center',
+                align: 'center'
+            },
+            id: EDIT_WINDOW_FORM_ID,
+            bodyPadding: 10,
+            items: [{
+                xtype: 'textfield',
+                fieldLabel: 'Sl No',
+                name: 'sl_no',
+                id: EDIT_SL_NO_TEXTFIELD_ID,
+                emptyText: 'Sl No',
+                anchor: '100%',
+                allowBlank: false
+            }, {
+                xtype: 'textfield',
+                fieldLabel: 'Quantity',
+                name: 'quantity',
+                id: EDIT_QUANTITY_TEXTFIELD_ID,
+                emptyText: 'Quantity',
+                anchor: '100%',
+                allowBlank: false
+            }, {
+                xtype: 'textfield',
+                fieldLabel: 'Description',
+                name: 'description',
+                id: EDIT_DESCRIPTION_TEXTFIELD_ID,
+                emptyText: 'Description',
+                anchor: '100%',
+                allowBlank: false
+            }
+            ],
+
+            buttons: [{
+                text: 'Save',
+                formBind: true,
+                id: EDIT_WINDOW_SAVE_BUTTON_ID,
+                listeners: {
+                    click: (e) => {
+                        console.log(Ext.getCmp(EDIT_WINDOW_FORM_ID).getForm().getValues());
+                        console.log('add button save clicked validate the data and go for final submission in the database');
+                    }
+                }
+            }, {
+                text: 'Cancel',
+                id: EDIT_WINDOW_CANCEL_BUTTON_ID,
+                listeners: {
+                    click: (e) => {
+                        Ext.getCmp(EDIT_INVOICE_WINDOW_ID).close();
+                    }
+                }
+            }],
+            buttonAlign: 'center',
+        }],
+        listeners: {
+            close: (e) => {
+                Ext.getCmp(EDIT_WINDOW_FORM_ID).getForm().reset(true);
+            }
+        }
+    });
+
+
     Ext.define(INVOICE_MODEL_NAME, {
         extend: 'Ext.data.Model',
         fields: [
@@ -165,18 +239,18 @@ Ext.onReady(() => {
 
     const editButtonDisplayHandler = (edit_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
-        let editable_invoices = selectedRowsList.filter(({ is_open }) => is_open === 1);
-        if (selectedRowsList.length === 1 && selectedRowsList.length === editable_invoices.length) {
+        let editableRowsList = selectedRowsList.filter(({ is_open }) => is_open === 1);
+        if (selectedRowsList.length === 1 && selectedRowsList.length === editableRowsList.length) {
             Ext.getCmp(edit_button_id).enable();
         } else {
             Ext.getCmp(edit_button_id).disable();
         }
+        return editableRowsList;
     }
 
     const addButtonDisplayHandler = (add_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
         if (selectedRowsList.length > 0) {
-            console.log('add button disable')
             Ext.getCmp(add_button_id).disable();
         } else {
             Ext.getCmp(add_button_id).enable();
@@ -184,21 +258,23 @@ Ext.onReady(() => {
     }
     const deleteButtonDisplayHandler = (delete_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
-        let deletable_invoices = selectedRowsList.filter(({ is_open }) => is_open === 0);
-        if (selectedRowsList.length > 0 && selectedRowsList.length === deletable_invoices.length) {
+        let deletableRowsList = selectedRowsList.filter(({ is_open }) => is_open === 0);
+        if (selectedRowsList.length > 0 && selectedRowsList.length === deletableRowsList.length) {
             Ext.getCmp(delete_button_id).enable();
         } else {
             Ext.getCmp(delete_button_id).disable();
         }
+        return deletableRowsList;
     }
     const approveButtonDisplayHandler = (approve_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
-        let approvable_invoices = selectedRowsList.filter(({ is_open }) => is_open === 1);
-        if (selectedRowsList.length > 0 && selectedRowsList.length === approvable_invoices.length) {
+        let approvableRowsList = selectedRowsList.filter(({ is_open }) => is_open === 1);
+        if (selectedRowsList.length > 0 && selectedRowsList.length === approvableRowsList.length) {
             Ext.getCmp(approve_button_id).enable();
         } else {
             Ext.getCmp(approve_button_id).disable();
         }
+        return approvableRowsList;
     }
 
 
@@ -466,6 +542,9 @@ Ext.onReady(() => {
     }
 
     const panelTabCreater = (title, id, name, storeID) => {
+        let approvableRowsList = []
+        let deletableRowsList = []
+        let editableRowsList = [];
         let selectedRows = [];
         let button_id = '';
         let button_name = '';
@@ -563,7 +642,7 @@ Ext.onReady(() => {
                     selModel: {
                         selType: 'checkboxmodel',
                         mode: 'MULTI',
-                        checkOnly: true
+                        // checkOnly: true
                     },
                     dockedItems: [{
                         xtype: 'pagingtoolbar',
@@ -576,7 +655,7 @@ Ext.onReady(() => {
                         displayInfo: true,
                         displayMsg: 'Displaying {0} - {1} of {2} &nbsp;',
                         emptyMsg: "No Records to Display!&nbsp;",
-                        items: (() => {
+                        items: ((id) => {
                             if (id === ALL_INVOICES_TAB_ID) {
                                 return [{
                                     xtype: 'button',
@@ -600,6 +679,12 @@ Ext.onReady(() => {
                                     listeners: {
                                         click: (e) => {
                                             console.log('edit button clicked with id : ' + e.id);
+                                            console.log('edit button clicked on the tab name : ', id);
+                                            console.log(editableRowsList);
+                                            Ext.getCmp(EDIT_SL_NO_TEXTFIELD_ID).setValue(editableRowsList[0]['sl_no']);
+                                            Ext.getCmp(EDIT_QUANTITY_TEXTFIELD_ID).setValue(editableRowsList[0]['quantity']);
+                                            Ext.getCmp(EDIT_DESCRIPTION_TEXTFIELD_ID).setValue(editableRowsList[0]['description']);
+                                            Ext.getCmp(EDIT_INVOICE_WINDOW_ID).show();
                                         }
                                     }
                                 }, {
@@ -611,6 +696,7 @@ Ext.onReady(() => {
                                     listeners: {
                                         click: (e) => {
                                             console.log('delete button clicked with id : ' + e.id);
+                                            console.log(deletableRowsList);
                                         }
                                     }
                                 },
@@ -622,6 +708,7 @@ Ext.onReady(() => {
                                     listeners: {
                                         click: (e) => {
                                             console.log('approved button clicked with id : ' + e.id);
+                                            console.log(approvableRowsList);
                                         }
                                     }
                                 }]
@@ -648,6 +735,12 @@ Ext.onReady(() => {
                                     listeners: {
                                         click: (e) => {
                                             console.log('edit button clicked with id : ' + e.id);
+                                            console.log('edit button clicked on the tab name : ', id);
+                                            console.log(editableRowsList);
+                                            Ext.getCmp(EDIT_SL_NO_TEXTFIELD_ID).setValue(editableRowsList[0]['sl_no']);
+                                            Ext.getCmp(EDIT_QUANTITY_TEXTFIELD_ID).setValue(editableRowsList[0]['quantity']);
+                                            Ext.getCmp(EDIT_DESCRIPTION_TEXTFIELD_ID).setValue(editableRowsList[0]['description']);
+                                            Ext.getCmp(EDIT_INVOICE_WINDOW_ID).show();
                                         }
                                     }
                                 },
@@ -659,6 +752,7 @@ Ext.onReady(() => {
                                     listeners: {
                                         click: (e) => {
                                             console.log('approved button clicked with id : ' + e.id);
+                                            console.log(approvableRowsList);
                                         }
                                     }
                                 }]
@@ -672,12 +766,14 @@ Ext.onReady(() => {
                                     listeners: {
                                         click: (e) => {
                                             console.log('delete button clicked with id : ' + e.id);
+                                            console.log(deletableRowsList);
                                         }
                                     }
                                 },
                                 ]
                             }
-                        })(id),
+                        }
+                        )(id),
 
                     }],
                     listeners: {
@@ -685,15 +781,15 @@ Ext.onReady(() => {
                             selectedRows.push(selModel.data);
                             if (id === ALL_INVOICES_TAB_ID) {
                                 addButtonDisplayHandler(`addButton_${name}`, selectedRows);
-                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
-                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
-                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                                editableRowsList = editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                deletableRowsList = deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
+                                approvableRowsList = approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
                             } else if (id === OPEN_INVOICES_TAB_ID) {
                                 addButtonDisplayHandler(`addButton_${name}`, selectedRows);
-                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
-                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                                editableRowsList = editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                approvableRowsList = approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
                             } else if (id === CLOSE_INVOICES_TAB_ID) {
-                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
+                                deletableRowsList = deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
                             }
 
                         },
@@ -704,15 +800,15 @@ Ext.onReady(() => {
                             );
                             if (id === ALL_INVOICES_TAB_ID) {
                                 addButtonDisplayHandler(`addButton_${name}`, selectedRows);
-                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
-                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
-                                approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
+                                editableRowsList = editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                deletableRowsList = deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
+                                approvableRowsList = approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
                             } else if (id === OPEN_INVOICES_TAB_ID) {
                                 addButtonDisplayHandler(`addButton_${name}`, selectedRows);
-                                editButtonDisplayHandler(`editButton_${name}`, selectedRows);
+                                editableRowsList = editButtonDisplayHandler(`editButton_${name}`, selectedRows);
                                 approveButtonDisplayHandler(`approveButton_${name}`, selectedRows);
                             } else if (id === CLOSE_INVOICES_TAB_ID) {
-                                deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
+                                deletableRowsList = deleteButtonDisplayHandler(`deleteButton_${name}`, selectedRows);
                             }
                         }
                     }
