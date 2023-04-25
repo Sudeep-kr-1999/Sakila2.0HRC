@@ -47,22 +47,7 @@ const ANALYTICS_TAB_STORE = 'analyticsInvoicesStore';
 const ANALYTICS_ADV_SEARCH_BUTTON_ID='analytics_adv_search_button';
 const ANALYTICS_ADV_SEARCH_BUTTON_NAME='Analytics Advance Search';
 
-
-
-
-// adv_search_button with id :  all_invoice_adv_search_button
-// sakila2.0.js:270 adv_search_button with id :  open_invoice_adv_search_button
-// sakila2.0.js:270 adv_search_button with id :  close_invoice_adv_search_button
-// sakila2.0.js:270 adv_search_button with id :  deleted_invoice_adv_search_button
-// sakila2.0.js:270 adv_search_button with id :  analytics_adv_search_button
-// sakila2.0.js:229 all_invoices_grid_adv_search_dialog_clear_button
-// sakila2.0.js:243 all_invoices_grid_adv_search_dialog_search_button
-// sakila2.0.js:229 open_invoices_grid_adv_search_dialog_clear_button
-// sakila2.0.js:243 open_invoices_grid_adv_search_dialog_search_button
-// sakila2.0.js:229 close_invoices_grid_adv_search_dialog_clear_button
-// sakila2.0.js:243 close_invoices_grid_adv_search_dialog_search_button
-// sakila2.0.js:229 deleted_invoices_grid_adv_search_dialog_clear_button
-// sakila2.0.js:243 deleted_invoices_grid_adv_search_dialog_search_button
-// sakila2.0.js:229 analytics_tab_adv_search_dialog_clear_button
-// sakila2.0.js:243 analytics_tab_adv_search_dialog_search_button
-
+const ADD_INVOICE_WINDOW_ID='add_invoices_window';
+const ADD_WINDOW_FORM_ID='add_window_form';
+const ADD_WINDOW_SAVE_BUTTON_ID='add_window_save_button';
+const ADD_WINDOW_CANCEL_BUTTON_ID='add_window_close_button';
