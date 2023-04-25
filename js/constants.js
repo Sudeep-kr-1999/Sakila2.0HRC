@@ -75,4 +75,4 @@ const EDIT_SL_NO_TEXTFIELD_ID = 'edit_sl_number';
 const EDIT_QUANTITY_TEXTFIELD_ID = 'edit_quantity';
 const EDIT_DESCRIPTION_TEXTFIELD_ID = 'edit_description';
 
-
+const DELETE_MSG_BOX_ID = 'delete_msg_box'
