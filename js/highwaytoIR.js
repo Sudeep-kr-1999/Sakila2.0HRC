@@ -1,233 +1,283 @@
 Ext.onReady(() => {
-    let registrations = [];
     let displayConfig = {
         disabled: true,
-        username: '',
-        email: '',
-        password: '',
-        confirmpassword: ''
-
-    }
+        username: "",
+        email: "",
+        password: "",
+        confirmpassword: "",
+    };
     // mainContainer
-    let mainPanel = Ext.create('Ext.panel.Panel', {
+    let mainPanel = Ext.create("Ext.panel.Panel", {
         layout: {
-            type: 'vbox',
+            type: "vbox",
         },
-        id: 'mainPanel',
+        id: "mainPanel",
         items: [
             {
-                xtype: 'panel',
-                id: 'topPanel',
+                xtype: "panel",
+                id: "topPanel",
                 border: true,
                 layout: {
-                    type: 'hbox',
-                    align: 'center'
+                    type: "hbox",
+                    align: "center",
                 },
                 bodyPadding: 15,
                 margin: 20,
                 items: [
                     {
-
-                        xtype: 'label',
-                        html: 'Hyd Readiness 2023',
-                        style: { fontSize: '30px', fontWeight: 'bold' },
+                        xtype: "label",
+                        html: "Hyd Readiness 2023",
+                        style: { fontSize: "30px", fontWeight: "bold" },
                         margin: "5 50 5 20",
-
                     },
                     {
-                        xtype: 'image',
+                        xtype: "image",
                         width: 300,
                         height: 70,
                         src: "https://cdn-resources.highradius.com/resources/wp-content/uploads/2020/03/Highradius-logo.png",
                         margin: "5 20 5 50",
-                    }
-                ]
+                    },
+                ],
             },
             {
-                xtype: 'panel',
-                id: 'bottomPanel',
+                xtype: "panel",
+                id: "bottomPanel",
                 border: true,
                 layout: {
-                    type: 'vbox',
-                    align: 'center',
-                    pack: 'center'
+                    type: "vbox",
+                    align: "center",
+                    pack: "center",
                 },
                 bodyPadding: 5,
-                margin: '0 20 20 20',
+                margin: "0 20 20 20",
                 items: [
                     {
-                        xtype: 'form',
-                        layout: 'center',
+                        xtype: "form",
+                        layout: "center",
                         id: "userform",
-                        buttonAlign: 'center',
+                        buttonAlign: "center",
                         border: false,
                         items: [
                             {
-                                xtype: 'fieldcontainer',
+                                xtype: "fieldcontainer",
                                 width: 755,
                                 height: 350,
-                                region: 'center',
-                                id: 'formfieldcontainer',
+                                region: "center",
+                                id: "formfieldcontainer",
                                 layout: {
-                                    type: 'vbox',
-                                    pack: 'center',
-                                    align: 'center'
+                                    type: "vbox",
+                                    pack: "center",
+                                    align: "center",
                                 },
                                 items: [
                                     {
-                                        xtype: 'textfield',
-                                        fieldLabel: 'Username',
-                                        name: 'username',
-                                        id: 'username',
-                                        margin: '10 10 10 10 ',
-                                        labelWidth: '20',
-                                        emptyText: 'Username',
-
+                                        xtype: "textfield",
+                                        fieldLabel: "Username",
+                                        name: "username",
+                                        id: "username",
+                                        margin: "10 10 10 10 ",
+                                        labelWidth: "20",
+                                        emptyText: "Username",
                                     },
                                     {
-                                        xtype: 'textfield',
-                                        fieldLabel: 'Email',
-                                        name: 'email',
-                                        id: 'email',
-                                        emptyText: 'Email Address',
-                                        margin: '10 10 10 10 ',
-                                        vtype: 'email',
-                                        labelWidth: '20',
-                                        inputType: 'email'
+                                        xtype: "textfield",
+                                        fieldLabel: "Email",
+                                        name: "email",
+                                        id: "email",
+                                        emptyText: "Email Address",
+                                        margin: "10 10 10 10 ",
+                                        vtype: "email",
+                                        labelWidth: "20",
+                                        inputType: "email",
                                     },
                                     {
-                                        xtype: 'textfield',
-                                        fieldLabel: 'Password',
-                                        name: 'password',
-                                        id: 'password',
-                                        emptyText: 'Password',
-                                        margin: '10 10 10 10 ',
-                                        labelWidth: '20',
-                                        inputType: 'password',
+                                        xtype: "textfield",
+                                        fieldLabel: "Password",
+                                        name: "password",
+                                        id: "password",
+                                        emptyText: "Password",
+                                        margin: "10 10 10 10 ",
+                                        labelWidth: "20",
+                                        inputType: "password",
                                     },
                                     {
-                                        xtype: 'textfield',
-                                        fieldLabel: 'Confirm<br>Password',
-                                        name: 'confirmpassword',
-                                        id: 'confirmpassword',
-                                        emptyText: 'Confirm Password',
-                                        margin: '10 10 10 10 ',
-                                        labelWidth: '20',
-                                        inputType: 'password',
+                                        xtype: "textfield",
+                                        fieldLabel: "Confirm<br>Password",
+                                        name: "confirmpassword",
+                                        id: "confirmpassword",
+                                        emptyText: "Confirm Password",
+                                        margin: "10 10 10 10 ",
+                                        labelWidth: "20",
+                                        inputType: "password",
                                     },
                                 ],
-
                             },
-
                         ],
-
                     },
                     {
                         xtype: "button",
-                        id: 'registerbutton',
+                        id: "registerbutton",
                         layout: {
-                            align: 'center',
-                            pack: 'center',
+                            align: "center",
+                            pack: "center",
                         },
-                        text: 'Register',
+                        text: "Register",
                         formBind: true,
-                        textAlign: 'center',
-                        margin: '0 10 20 10 ',
+                        textAlign: "center",
+                        margin: "0 10 20 10 ",
                         disabled: true,
                         listeners: {
                             click: (e) => {
-                                let usernameField = Ext.getCmp('username');
-                                let emailField = Ext.getCmp('email');
-                                let passwordField = Ext.getCmp('password');
-                                let confirmpasswordField = Ext.getCmp('confirmpassword');
-                                let registerButton = Ext.getCmp('registerbutton');
+                                let usernameField = Ext.getCmp("username");
+                                let emailField = Ext.getCmp("email");
+                                let passwordField = Ext.getCmp("password");
+                                let confirmpasswordField = Ext.getCmp("confirmpassword");
+                                let registerButton = Ext.getCmp("registerbutton");
                                 let newUser = {
                                     username: usernameField.getValue(),
                                     email: emailField.getValue(),
-                                    password: passwordField.getValue()
-                                }
+                                    password: passwordField.getValue(),
+                                };
                                 let confirmpassword_input = confirmpasswordField.getValue();
-                                if (newUser.username != '' && newUser.email != '' && newUser.password != '' && confirmpassword_input != '') {
-                                    let filterfetchedRecord = registrations.filter(({ email }) => (email === newUser.email));
-                                    if (filterfetchedRecord.length == 0) {
-                                        if (confirmpassword_input == newUser.password) {
-                                            registrations.push(newUser);
-                                            Ext.Msg.show({
-                                                title: 'Registration Successful',
-                                                message: `User Registered Successfully. <br/><br/> UserName : ${newUser.username}`,
-                                                buttons: Ext.Msg.OKCANCEL,
-                                            });
-                                            usernameField.reset();
-                                            emailField.reset();
-                                            passwordField.reset();
-                                            confirmpasswordField.reset();
-                                            registerButton.disable();
-                                        } else {
-                                            Ext.Msg.alert('Password Mismatch', 'Please enter the same password!');
-                                            confirmpasswordField.reset();
-                                            confirmpasswordField.focus();
-                                            registerButton.disable();
-                                        }
-                                    } else {
-                                        Ext.Msg.show({
-                                            title: 'Error',
-                                            message: `User Already Registered.<br/> UserName : ${filterfetchedRecord[0].username}`,
-                                            buttons: Ext.Msg.OKCANCEL,
-                                            closable: false
+                                if (
+                                    newUser.username != "" &&
+                                    newUser.email != "" &&
+                                    newUser.password != "" &&
+                                    confirmpassword_input != ""
+                                ) {
+                                    if (confirmpassword_input == newUser.password) {
+                                        let getRequestResponse = [];
+                                        Ext.Ajax.request({
+                                            cors: true,
+                                            method: "GET",
+                                            responseType: "json",
+                                            headers: { 'Content-Type': 'application/json' },
+                                            url: `http://localhost:8080/HighwayToIRServlets/GetUser`,
+                                            params: {
+                                                email: newUser.email,
+                                            },
+                                            success: (response) => {
+                                                console.log(response);
+                                                let getRequestServerResponse = Ext.JSON.decode(response.responseText);
+                                                console.log(getRequestServerResponse);
+                                                if (getRequestServerResponse.length > 0) {
+                                                    getRequestResponse = getRequestServerResponse;
+                                                    Ext.Msg.show({
+                                                        title: "Error",
+                                                        message: `User Already Registered.<br/> UserName : ${getRequestResponse[0].user_name}`,
+                                                        buttons: Ext.Msg.OKCANCEL,
+                                                        closable: false,
+                                                    });
+                                                    usernameField.reset();
+                                                    emailField.reset();
+                                                    passwordField.reset();
+                                                    confirmpasswordField.reset();
+                                                    registerButton.disable();
+                                                } else {
+                                                    Ext.Ajax.request({
+                                                        method: "POST",
+                                                        cors: true,
+                                                        responseType: "json",
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        url: `http://localhost:8080/HighwayToIRServlets/RegisterUser`,
+                                                        jsonData: newUser,
+                                                        success: (response) => {
+                                                            console.log(response);
+                                                            let successRowsEntryCount = Ext.JSON.decode(response.responseText);
+                                                            console.log(successRowsEntryCount);
+                                                            Ext.Msg.show({
+                                                                title: "Registration Successful",
+                                                                message: `User Registered Successfully. <br/><br/> UserName : ${newUser.username}`,
+                                                                buttons: Ext.Msg.OKCANCEL,
+                                                            });
+                                                            usernameField.reset();
+                                                            emailField.reset();
+                                                            passwordField.reset();
+                                                            confirmpasswordField.reset();
+                                                            registerButton.disable();
+                                                        },
+                                                        failure: (_response) => {
+                                                            console.log(
+                                                                "Some Error Occoured ,Please Try Again"
+                                                            );
+                                                        },
+                                                    });
+                                                }
+                                            },
+                                            failure: (_response) => {
+                                                console.log("Some Error Occoured ,Please Try Again");
+                                            },
                                         });
-                                        usernameField.reset();
-                                        emailField.reset();
-                                        passwordField.reset();
+                                    } else {
+                                        Ext.Msg.alert(
+                                            "Password Mismatch",
+                                            "Please enter the same password!"
+                                        );
                                         confirmpasswordField.reset();
+                                        confirmpasswordField.focus();
                                         registerButton.disable();
                                     }
-
-
                                 } else {
-                                    Ext.Msg.alert('Warning', 'Please fill all the required details');
+                                    Ext.Msg.alert(
+                                        "Warning",
+                                        "Please fill all the required details"
+                                    );
                                 }
-
-
                             },
-                        }
-                    }
-
-                ]
-            }
-        ]
-    })
+                        },
+                    },
+                ],
+            },
+        ],
+    });
 
     // parentContiner
-    Ext.create('Ext.container.Container', {
-        id: 'parentContainer',
+    Ext.create("Ext.container.Container", {
+        id: "parentContainer",
         layout: {
-            type: 'vbox'
+            type: "vbox",
         },
         bodyPadding: "10",
-        renderTo: document.getElementById('root'),
+        renderTo: document.getElementById("root"),
         // renderTo: root,
-        items: [mainPanel]
-    })
+        items: [mainPanel],
+    });
 
-
-    let usernameContainer = document.querySelector('#username input');
-    let emailContainer = document.querySelector('#email input');
-    let passwordContainer = document.querySelector('#password input');
-    let confirmPasswordContainer = document.querySelector('#confirmpassword input');
-    let registerButton = Ext.getCmp('registerbutton');
+    let usernameContainer = document.querySelector("#username input");
+    let emailContainer = document.querySelector("#email input");
+    let passwordContainer = document.querySelector("#password input");
+    let confirmPasswordContainer = document.querySelector(
+        "#confirmpassword input"
+    );
+    let registerButton = Ext.getCmp("registerbutton");
     const buttonDisplayHandler = (elementName, elementValue) => {
         displayConfig = { ...displayConfig, [elementName]: elementValue };
-        if (displayConfig.username !== '' && displayConfig.email !== '' && displayConfig.password !== '' && displayConfig.confirmpassword != '') {
+        if (
+            displayConfig.username !== "" &&
+            displayConfig.email !== "" &&
+            displayConfig.password !== "" &&
+            displayConfig.confirmpassword != ""
+        ) {
             displayConfig = { ...displayConfig, disabled: false };
             registerButton.enable();
         } else {
             displayConfig = { ...displayConfig, disabled: true };
             registerButton.disable();
         }
-    }
+    };
 
-    usernameContainer.addEventListener('keyup', (e) => buttonDisplayHandler(e.target.name, e.target.value));
-    emailContainer.addEventListener('keyup', (e) => buttonDisplayHandler(e.target.name, e.target.value));
-    passwordContainer.addEventListener('keyup', (e) => buttonDisplayHandler(e.target.name, e.target.value));
-    confirmPasswordContainer.addEventListener('keyup', (e) => buttonDisplayHandler(e.target.name, e.target.value));
-})
+    usernameContainer.addEventListener("keyup", (e) =>
+        buttonDisplayHandler(e.target.name, e.target.value)
+    );
+    emailContainer.addEventListener("keyup", (e) =>
+        buttonDisplayHandler(e.target.name, e.target.value)
+    );
+    passwordContainer.addEventListener("keyup", (e) =>
+        buttonDisplayHandler(e.target.name, e.target.value)
+    );
+    confirmPasswordContainer.addEventListener("keyup", (e) =>
+        buttonDisplayHandler(e.target.name, e.target.value)
+    );
+});
+
+

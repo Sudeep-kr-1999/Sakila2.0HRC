@@ -1,5 +1,5 @@
 Ext.onReady(() => {
-
+    console.log("application started");
     const addWindowModalCreator = (id) => {
         return Ext.create('Ext.window.Window', {
             id: `${id}_${ADD_INVOICE_WINDOW_ID}`,
@@ -248,6 +248,7 @@ Ext.onReady(() => {
         ]
     })
 
+
     const editButtonDisplayHandler = (edit_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
         let editableRowsList = selectedRowsList.filter(({ is_open }) => is_open === 1);
@@ -259,6 +260,7 @@ Ext.onReady(() => {
         return editableRowsList;
     }
 
+
     const addButtonDisplayHandler = (add_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
         if (selectedRowsList.length > 0) {
@@ -267,6 +269,8 @@ Ext.onReady(() => {
             Ext.getCmp(add_button_id).enable();
         }
     }
+
+
     const deleteButtonDisplayHandler = (delete_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
         let deletableRowsList = selectedRowsList.filter(({ is_open }) => is_open === 0);
@@ -277,6 +281,8 @@ Ext.onReady(() => {
         }
         return deletableRowsList;
     }
+
+
     const approveButtonDisplayHandler = (approve_button_id, selectedRowsList) => {
         console.log(selectedRowsList);
         let approvableRowsList = selectedRowsList.filter(({ is_open }) => is_open === 1);
@@ -289,10 +295,12 @@ Ext.onReady(() => {
     }
 
 
-    let openInvoicesStore = Ext.create('Ext.data.Store', {
-        storeId: OPEN_INVOICE_STORE_ID,
+
+    let allInvoicesStore = Ext.create('Ext.data.Store', {
+        storeId: ALL_INVOICE_STORE_ID,
         model: INVOICE_MODEL_NAME,
         pageSize: 6,
+        autoLoad: true,
         proxy: {
             type: 'memory',
             enablePaging: true,
@@ -369,14 +377,558 @@ Ext.onReady(() => {
                     'country': 'United Kingdom',
                     'is_open': 0
                 },
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
             ]
         }
-    })
+    });
 
-    openInvoicesStore.load();
 
+    let openInvoicesStore = Ext.create('Ext.data.Store', {
+        storeId: OPEN_INVOICE_STORE_ID,
+        model: INVOICE_MODEL_NAME,
+        pageSize: 6,
+        autoLoad: true,
+        proxy: {
+            type: 'memory',
+            enablePaging: true,
+            data: [
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+            ]
+        }
+    });
+
+
+    let closeInvoicesStore = Ext.create('Ext.data.Store', {
+        storeId: CLOSE_INVOICE_STORE_ID,
+        model: INVOICE_MODEL_NAME,
+        pageSize: 6,
+        autoLoad: true,
+        proxy: {
+            type: 'memory',
+            enablePaging: true,
+            data: [
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+            ]
+        }
+    });
+
+
+    let deletedInvoicesStore = Ext.create('Ext.data.Store', {
+        storeId: DELETED_INVOICE_STORE_ID,
+        model: INVOICE_MODEL_NAME,
+        pageSize: 6,
+        autoLoad: true,
+        proxy: {
+            type: 'memory',
+            enablePaging: true,
+            data: [
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25903,
+                    'invoice_number': '77777',
+                    'stock_code': '7',
+                    'description': 'Testing-add',
+                    'quantity': 7,
+                    'invoice_date': '12/01/2022',
+                    'unit_price': 7,
+                    'customer_id': '7',
+                    'country': 'India',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25899,
+                    'invoice_number': 'C577486',
+                    'stock_code': '23198',
+                    'description': 'PANTRY MAGNETIC SHOPPING LIST',
+                    'quantity': 52,
+                    'invoice_date': '11/20/2011 11:59',
+                    'unit_price': 1.45,
+                    'customer_id': '15533',
+                    'country': 'United Kingdom',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25898,
+                    'invoice_number': 'C577481',
+                    'stock_code': '23198',
+                    'description': 'POSTAGE',
+                    'quantity': 1,
+                    'invoice_date': '11/20/2011 11:39',
+                    'unit_price': 18,
+                    'customer_id': '12778',
+                    'country': 'Netherlands',
+                    'is_open': 1
+                },
+                {
+                    'sl_no': 25897,
+                    'invoice_number': 'C577399',
+                    'stock_code': '22138',
+                    'description': 'BAKING SET 9 PIECE RETROSPOT',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:15',
+                    'unit_price': 4.95,
+                    'customer_id': '13895',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25890,
+                    'invoice_number': 'C577390',
+                    'stock_code': '23401',
+                    'description': 'RUSTIC MIRROR WITH LACE HEART',
+                    'quantity': 1,
+                    'invoice_date': '11/18/2011 17:01',
+                    'unit_price': 6.25,
+                    'customer_id': '18276',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+                {
+                    'sl_no': 25889,
+                    'invoice_number': 'C577389',
+                    'stock_code': '23108',
+                    'description': 'SET OF 10 LED DOLLY LIGHTS',
+                    'quantity': 2,
+                    'invoice_date': '11/18/2011 16:59',
+                    'unit_price': 6.25,
+                    'customer_id': '13381',
+                    'country': 'United Kingdom',
+                    'is_open': 0
+                },
+            ]
+        }
+    });
 
     const analyticsTabCreater = (title, id, name, storeID) => {
+        console.log("analytics tab ")
         let analytics_adv_search_dialog_id = `${id}_adv_search_dialog`;
         let analytics_tab = {
             id: `${id}`,
@@ -563,15 +1115,20 @@ Ext.onReady(() => {
         if (id === ALL_INVOICES_TAB_ID) {
             button_id = ALL_INVOICES_ADV_SEARCH_BUTTON_ID;
             button_name = ALL_INVOICES_ADV_SEARCH_BUTTON_NAME;
+            console.log("all invoices tab");
         } else if (id === OPEN_INVOICES_TAB_ID) {
             button_id = OPEN_INVOICES_ADV_SEARCH_BUTTON_ID;
             button_name = OPEN_INVOICES_ADV_SEARCH_BUTTON_NAME;
+            console.log("open invoices tab");
         } else if (id === CLOSE_INVOICES_TAB_ID) {
             button_id = CLOSE_INVOICES_ADV_SEARCH_BUTTON_ID;
             button_name = CLOSE_INVOICES_ADV_SEARCH_BUTTON_NAME;
+            console.log("close invoices tab");
         } else {
             button_id = DELETED_INVOICES_ADV_SEARCH_BUTTON_ID;
             button_name = DELETED_INVOICES_ADV_SEARCH_BUTTON_NAME;
+            console.log("deleted invoices tab");
+
         }
         let createdTab = {
             title: `${title}`,
@@ -721,6 +1278,9 @@ Ext.onReady(() => {
                                                         Ext.getCmp(id).getSelectionModel().deselectAll();
                                                         Ext.getCmp(id).getView().refresh();
 
+                                                    } else {
+                                                        Ext.getCmp(id).getSelectionModel().deselectAll();
+                                                        Ext.getCmp(id).getView().refresh();
                                                     }
                                                 }
                                             });
@@ -811,6 +1371,9 @@ Ext.onReady(() => {
                                                         Ext.getCmp(id).getSelectionModel().deselectAll();
                                                         Ext.getCmp(id).getView().refresh();
 
+                                                    } else {
+                                                        Ext.getCmp(id).getSelectionModel().deselectAll();
+                                                        Ext.getCmp(id).getView().refresh();
                                                     }
                                                 }
                                             });
@@ -972,11 +1535,11 @@ Ext.onReady(() => {
                     pack: 'center'
                 },
                 items: [
-                    (panelTabCreater)(ALL_INVOICES_TAB_TITLE, ALL_INVOICES_TAB_ID, ALL_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
-                    (panelTabCreater)(OPEN_INVOICES_TAB_TITLE, OPEN_INVOICES_TAB_ID, OPEN_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
-                    (panelTabCreater)(CLOSE_INVOICES_TAB_TITLE, CLOSE_INVOICES_TAB_ID, CLOSE_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
-                    (panelTabCreater)(DELETED_INVOICES_TAB_TITLE, DELETED_INVOICES_TAB_ID, DELETED_INVOICES_TAB_NAME, OPEN_INVOICES_STORE),
-                    (analyticsTabCreater)(ANALYTICS_TAB_TITLE, ANALYTICS_TAB_ID, ANALYTICS_TAB_NAME, ANALYTICS_TAB_STORE)
+                    (panelTabCreater)(ALL_INVOICES_TAB_TITLE, ALL_INVOICES_TAB_ID, ALL_INVOICES_TAB_NAME, ALL_INVOICE_STORE_ID),
+                    (panelTabCreater)(OPEN_INVOICES_TAB_TITLE, OPEN_INVOICES_TAB_ID, OPEN_INVOICES_TAB_NAME, OPEN_INVOICE_STORE_ID),
+                    (panelTabCreater)(CLOSE_INVOICES_TAB_TITLE, CLOSE_INVOICES_TAB_ID, CLOSE_INVOICES_TAB_NAME, CLOSE_INVOICE_STORE_ID),
+                    (panelTabCreater)(DELETED_INVOICES_TAB_TITLE, DELETED_INVOICES_TAB_ID, DELETED_INVOICES_TAB_NAME, DELETED_INVOICE_STORE_ID),
+                    (analyticsTabCreater)(ANALYTICS_TAB_TITLE, ANALYTICS_TAB_ID, ANALYTICS_TAB_NAME, ANALYTICS_TAB_STORE_ID)
                 ]
             },
             {
