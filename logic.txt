@@ -1,0 +1,26 @@
+Parent Screen : : : : :
+
+-------------------------------------------------------
+1. All invoices :----> /all_invoices/{pageno}
+2. Open invoices : -----> /open_invoices/{pageno}
+3. Close invoices : -----> /close_invoices/{pageno}
+4. Deleted invoices : -----> /deleted_invoices/{pageno}
+
+------------------------------------------------------------
+
+5.Add button : -----> /add_invoice {jsonbody}
+6.delete_invoice : ------> /delete_invoice {queryparamters}
+7.approve_invoice : -------> /approve_invoice {queryparameters}
+8.edit invoice : --------> /edit_invoice {queryparameters}
+
+-------------------------------------------------------------
+
+Advance Search : : : : 
+9.search invoice : ------- > /search_invoice {queryparameters}
+
+
+-------------------------------------------------------------
+utilites: : : :
+find_max_invoice_slno  : /max_invoice_slno
+
+---------------------------------------------------------

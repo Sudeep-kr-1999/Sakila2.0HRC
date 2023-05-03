@@ -959,9 +959,9 @@ Ext.onReady(() => {
         return analytics_tab;
     }
 
-    const advSearchDialogCreator = (id, name, storeID) => {
+    const advSearchDialogCreator = (dialog_id, name, storeID, grid_id) => {
         let dialog = {
-            id: `${id}`,
+            id: `${dialog_id}`,
             name: `${name}`,
             hidden: true,
             xtype: 'container',
@@ -1002,7 +1002,7 @@ Ext.onReady(() => {
                                             xtype: 'textfield',
                                             fieldLabel: 'Invoice Number',
                                             name: `${name}_invoice_number`,
-                                            id: `${id}_search_invoice_number_textfield`,
+                                            id: `${dialog_id}_search_invoice_number_textfield`,
                                             margin: '10 10 10 10 ',
 
                                         },
@@ -1022,7 +1022,7 @@ Ext.onReady(() => {
                                             xtype: 'textfield',
                                             fieldLabel: 'Customer ID',
                                             name: `${name}_customer_id`,
-                                            id: `${id}_search_customer_id_textfield`,
+                                            id: `${dialog_id}_search_customer_id_textfield`,
                                             margin: '10 10 10 10 ',
                                         },
                                     ]
@@ -1044,7 +1044,7 @@ Ext.onReady(() => {
                     items: [
                         {
                             xtype: 'button',
-                            id: `${id}_clear_button`,
+                            id: `${dialog_id}_clear_button`,
                             text: 'Clear',
                             margin: '0 10 0 10',
                             width: 100,
@@ -1058,12 +1058,16 @@ Ext.onReady(() => {
                         {
 
                             xtype: 'button',
-                            id: `${id}_search_button`,
+                            id: `${dialog_id}_search_button`,
                             text: 'Search',
                             margin: '0 10 0 10',
                             width: 100,
                             listeners: {
                                 click: (e) => {
+                                    let grid = Ext.getCmp(grid_id);
+                                    console.log(grid);
+                                    let pagingToolbar = grid.getDockedItems('toolbar[dock="top"]')[0];
+                                    pagingToolbar.moveFirst();
                                     console.log(e.id);
                                 }
                             }
@@ -1152,7 +1156,7 @@ Ext.onReady(() => {
 
                     ]
                 },
-                (advSearchDialogCreator)(adv_search_dialog_id, `${name}_adv_search_dialog`, `${storeID}_adv_search_dialog`,),
+                (advSearchDialogCreator)(adv_search_dialog_id, `${name}_adv_search_dialog`, storeID, id),
                 {
 
                     title: `${title}`,
@@ -1223,6 +1227,12 @@ Ext.onReady(() => {
                         displayInfo: true,
                         displayMsg: 'Displaying {0} - {1} of {2} &nbsp;',
                         emptyMsg: "No Records to Display!&nbsp;",
+                        listeners: {
+                            change: (toolbar, pageData, eOpts) => {
+                                console.log("id : ", id);
+                                console.log('Page changed to ' + pageData.currentPage);
+                            }
+                        },
                         items: ((id) => {
                             if (id === ALL_INVOICES_TAB_ID) {
                                 return [{
