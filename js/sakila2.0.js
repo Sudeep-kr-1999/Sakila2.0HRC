@@ -115,6 +115,7 @@ Ext.onReady(() => {
                         click: (e) => {
                             console.log(Ext.getCmp(`${id}_${ADD_WINDOW_FORM_ID}`).getForm().getValues());
                             console.log('add button save clicked validate the data and go for final submission in the database');
+                            console.log(allInvoicesStore, openInvoicesStore, closeInvoicesStore, deletedInvoicesStore);
                         }
                     }
                 }, {
@@ -196,6 +197,7 @@ Ext.onReady(() => {
                         click: (e) => {
                             console.log(Ext.getCmp(`${id}_${EDIT_WINDOW_FORM_ID}`).getForm().getValues());
                             console.log('add button save clicked validate the data and go for final submission in the database');
+                            console.log(allInvoicesStore, openInvoicesStore, closeInvoicesStore, deletedInvoicesStore);
                         }
                     }
                 }, {
@@ -960,6 +962,7 @@ Ext.onReady(() => {
     }
 
     const advSearchDialogCreator = (dialog_id, name, storeID, grid_id) => {
+
         let dialog = {
             id: `${dialog_id}`,
             name: `${name}`,
@@ -1051,6 +1054,7 @@ Ext.onReady(() => {
                             listeners: {
                                 click: (e) => {
                                     console.log(e.id);
+                                    console.log(allInvoicesStore, openInvoicesStore, closeInvoicesStore, deletedInvoicesStore);
                                 }
                             }
 
@@ -1069,6 +1073,7 @@ Ext.onReady(() => {
                                     let pagingToolbar = grid.getDockedItems('toolbar[dock="top"]')[0];
                                     pagingToolbar.moveFirst();
                                     console.log(e.id);
+                                    console.log(allInvoicesStore, openInvoicesStore, closeInvoicesStore, deletedInvoicesStore);
                                 }
                             }
 
@@ -1233,7 +1238,7 @@ Ext.onReady(() => {
                                 console.log('Page changed to ' + pageData.currentPage);
                             }
                         },
-                        items: ((id) => {
+                        items: ((id, editableRowsList, deletableRowsList, approvableRowsList) => {
                             if (id === ALL_INVOICES_TAB_ID) {
                                 return [{
                                     xtype: 'button',
@@ -1287,6 +1292,7 @@ Ext.onReady(() => {
                                                         Ext.Msg.alert('Success', `${deletableRowsList.length}row(s) Deleted Successfully`);
                                                         Ext.getCmp(id).getSelectionModel().deselectAll();
                                                         Ext.getCmp(id).getView().refresh();
+                                                        console.log(allInvoicesStore, openInvoicesStore, closeInvoicesStore, deletedInvoicesStore);
 
                                                     } else {
                                                         Ext.getCmp(id).getSelectionModel().deselectAll();
@@ -1380,6 +1386,7 @@ Ext.onReady(() => {
                                                         Ext.Msg.alert('Success', `${deletableRowsList.length}row(s) Deleted Successfully`);
                                                         Ext.getCmp(id).getSelectionModel().deselectAll();
                                                         Ext.getCmp(id).getView().refresh();
+                                                        console.log(allInvoicesStore, openInvoicesStore, closeInvoicesStore, deletedInvoicesStore);
 
                                                     } else {
                                                         Ext.getCmp(id).getSelectionModel().deselectAll();
@@ -1394,7 +1401,7 @@ Ext.onReady(() => {
                                 ]
                             }
                         }
-                        )(id),
+                        )(id, editableRowsList, deletableRowsList, approvableRowsList),
 
                     }],
                     listeners: {

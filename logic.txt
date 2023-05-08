@@ -20,7 +20,17 @@ Advance Search : : : :
 
 
 -------------------------------------------------------------
+optional
 utilites: : : :
 find_max_invoice_slno  : /max_invoice_slno
 
 ---------------------------------------------------------
+packages for spring
+
+action
+manager
+managerimpl
+dao
+daoimpl
+model
+
